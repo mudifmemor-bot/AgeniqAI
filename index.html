@@ -1,0 +1,2616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ageniq AI - AI-Powered Agency Growth Operating System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0B0F1C;
+            --bg-secondary: #111827;
+            --accent-blue: #4F7CFF;
+            --accent-violet: #8A5CFF;
+            --accent-cyan: #22D3EE;
+            --text-primary: #EAEFFF;
+            --text-secondary: #94A3B8;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glow-blue: rgba(79, 124, 255, 0.4);
+            --glow-violet: rgba(138, 92, 255, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated Background Grid */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background-image:
+                linear-gradient(rgba(79, 124, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(79, 124, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        /* Floating Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 15s infinite;
+        }
+
+        .particle:nth-child(2n) { background: var(--accent-violet); animation-duration: 20s; }
+        .particle:nth-child(3n) { background: var(--accent-cyan); animation-duration: 25s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+        }
+
+        /* Glow Effects */
+        .glow-line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-blue), var(--accent-violet), transparent);
+            opacity: 0.5;
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 20px 0;
+            background: rgba(11, 15, 28, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            padding: 12px 0;
+            background: rgba(11, 15, 28, 0.95);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            color: white;
+            box-shadow: 0 4px 20px var(--glow-blue);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px var(--glow-blue);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--glass-bg);
+            border-color: var(--accent-blue);
+        }
+
+        .btn-glow {
+            position: relative;
+        }
+
+        .btn-glow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-glow:hover::before {
+            left: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(79, 124, 255, 0.1) 0%, transparent 60%);
+            animation: heroGlow 8s ease-in-out infinite;
+        }
+
+        @keyframes heroGlow {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-text {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .hero-badge span {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-blue) 50%, var(--accent-violet) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.8s ease 0.1s forwards;
+            opacity: 0;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 520px;
+            animation: fadeInUp 0.8s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 16px;
+            animation: fadeInUp 0.8s ease 0.3s forwards;
+            opacity: 0;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 32px;
+            margin-top: 48px;
+            animation: fadeInUp 0.8s ease 0.4s forwards;
+            opacity: 0;
+        }
+
+        .stat {
+            text-align: left;
+        }
+
+        .stat-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--accent-blue);
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Dashboard Mockup */
+        .hero-dashboard {
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1s ease 0.5s forwards;
+            opacity: 0;
+        }
+
+        .dashboard-container {
+            background: linear-gradient(135deg, rgba(79, 124, 255, 0.1), rgba(138, 92, 255, 0.1));
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 24px;
+            backdrop-filter: blur(20px);
+            transform: perspective(1000px) rotateY(-5deg) rotateX(5deg);
+            transition: transform 0.5s ease;
+        }
+
+        .dashboard-container:hover {
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .dashboard-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .dashboard-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--accent-cyan);
+        }
+
+        .dashboard-status::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .dashboard-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-card:hover {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 30px var(--glow-blue);
+        }
+
+        .card-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .card-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .card-value.positive {
+            color: #10B981;
+        }
+
+        .card-change {
+            font-size: 12px;
+            color: #10B981;
+            margin-top: 4px;
+        }
+
+        /* AI Activity Animation */
+        .ai-activity {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .activity-title {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .activity-badge {
+            font-size: 11px;
+            padding: 4px 10px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            border-radius: 100px;
+            color: white;
+        }
+
+        .activity-items {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            animation: slideIn 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        .activity-item:nth-child(1) { animation-delay: 0.1s; }
+        .activity-item:nth-child(2) { animation-delay: 0.2s; }
+        .activity-item:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .activity-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .activity-text {
+            flex: 1;
+        }
+
+        .activity-name {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .activity-status {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        /* Floating Labels */
+        .floating-label {
+            position: absolute;
+            padding: 12px 20px;
+            background: rgba(11, 15, 28, 0.9);
+            border: 1px solid var(--accent-blue);
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-primary);
+            box-shadow: 0 0 30px var(--glow-blue);
+            animation: floatLabel 3s ease-in-out infinite;
+            z-index: 10;
+        }
+
+        .floating-label:nth-child(1) { top: 10%; right: -5%; animation-delay: 0s; }
+        .floating-label:nth-child(2) { top: 50%; left: -10%; animation-delay: 1s; }
+        .floating-label:nth-child(3) { bottom: 20%; right: -5%; animation-delay: 2s; }
+
+        @keyframes floatLabel {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Problem Section */
+        .problem {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-header h2 {
+            font-size: 48px;
+            margin-bottom: 24px;
+        }
+
+        .section-header p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .comparison-side {
+            padding: 40px;
+            border-radius: 24px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+        }
+
+        .comparison-side.negative {
+            opacity: 0.7;
+        }
+
+        .comparison-side.positive {
+            background: linear-gradient(135deg, rgba(79, 124, 255, 0.1), rgba(138, 92, 255, 0.1));
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 60px var(--glow-blue);
+        }
+
+        .comparison-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .comparison-title.negative { color: #EF4444; }
+        .comparison-title.positive { color: #10B981; }
+
+        .comparison-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .comparison-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+
+        .comparison-list li::before {
+            content: '';
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .negative .comparison-list li::before {
+            background: rgba(239, 68, 68, 0.2);
+            color: #EF4444;
+        }
+
+        .positive .comparison-list li::before {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10B981;
+        }
+
+        /* Product Demo Section */
+        .demo {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .demo-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 48px;
+            flex-wrap: wrap;
+        }
+
+        .demo-tab {
+            padding: 12px 24px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .demo-tab:hover {
+            color: var(--text-primary);
+            border-color: var(--accent-blue);
+        }
+
+        .demo-tab.active {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            color: white;
+            border-color: transparent;
+        }
+
+        .demo-content {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .demo-visual {
+            background: linear-gradient(135deg, rgba(79, 124, 255, 0.1), rgba(138, 92, 255, 0.1));
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            min-height: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-visual-content {
+            display: none;
+        }
+
+        .demo-visual-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .demo-mockup {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .mockup-header {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .mockup-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--glass-border);
+        }
+
+        .mockup-dot:nth-child(1) { background: #EF4444; }
+        .mockup-dot:nth-child(2) { background: #F59E0B; }
+        .mockup-dot:nth-child(3) { background: #10B981; }
+
+        .mockup-content {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .mockup-line {
+            height: 12px;
+            background: var(--glass-border);
+            border-radius: 6px;
+        }
+
+        .mockup-line.short { width: 60%; }
+        .mockup-line.medium { width: 80%; }
+
+        .demo-info h3 {
+            font-size: 28px;
+            margin-bottom: 16px;
+        }
+
+        .demo-info p {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            line-height: 1.7;
+        }
+
+        .demo-metric {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+        }
+
+        .metric-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .metric-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .metric-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* Profit Intelligence Section */
+        .profit {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .profit-visual {
+            background: linear-gradient(135deg, rgba(79, 124, 255, 0.1), rgba(138, 92, 255, 0.1));
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 48px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profit-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            height: 300px;
+            padding: 24px 0;
+            border-bottom: 1px solid var(--glass-border);
+            position: relative;
+        }
+
+        .chart-bar-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .chart-bar {
+            width: 40px;
+            background: linear-gradient(180deg, var(--accent-blue), var(--accent-violet));
+            border-radius: 8px 8px 0 0;
+            transition: height 1s ease;
+            position: relative;
+        }
+
+        .chart-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(255,255,255,0.2), transparent);
+            border-radius: 8px 8px 0 0;
+        }
+
+        .chart-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .profit-metrics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .profit-metric {
+            text-align: center;
+            padding: 24px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+        }
+
+        .profit-metric-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin-bottom: 8px;
+        }
+
+        .profit-metric-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* Alert Notification */
+        .alert-notification {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            padding: 16px 24px;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: alertSlide 0.5s ease forwards, alertPulse 2s ease-in-out infinite 0.5s;
+        }
+
+        @keyframes alertSlide {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes alertPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+            50% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+        }
+
+        .alert-icon {
+            width: 32px;
+            height: 32px;
+            background: #EF4444;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .alert-text {
+            font-size: 13px;
+        }
+
+        .alert-title {
+            font-weight: 600;
+            color: #EF4444;
+        }
+
+        .alert-desc {
+            color: var(--text-secondary);
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 60px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-violet));
+        }
+
+        .timeline-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            flex: 1;
+            padding: 0 20px;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: var(--bg-primary);
+            border: 2px solid var(--accent-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-step.active .step-number {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            color: white;
+            box-shadow: 0 0 40px var(--glow-blue);
+        }
+
+        .step-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .step-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            max-width: 250px;
+        }
+
+        /* Differentiation Section */
+        .differentiation {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .diff-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-top: 60px;
+        }
+
+        .diff-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .diff-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, var(--glow-blue) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .diff-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .diff-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 20px 60px var(--glow-blue);
+        }
+
+        .diff-card.highlight {
+            background: linear-gradient(135deg, rgba(79, 124, 255, 0.15), rgba(138, 92, 255, 0.15));
+            border-color: var(--accent-violet);
+        }
+
+        .diff-card.highlight::before {
+            opacity: 0.2;
+        }
+
+        .diff-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            margin: 0 auto 24px;
+        }
+
+        .diff-card.highlight .diff-icon {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            border: none;
+        }
+
+        .diff-title {
+            font-size: 22px;
+            margin-bottom: 16px;
+        }
+
+        .diff-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Social Proof Section */
+        .social-proof {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .proof-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .proof-stats {
+            display: flex;
+            justify-content: center;
+            gap: 80px;
+            flex-wrap: wrap;
+        }
+
+        .proof-stat {
+            text-align: center;
+        }
+
+        .proof-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 64px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .proof-label {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        .proof-companies {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            margin-top: 60px;
+            flex-wrap: wrap;
+        }
+
+        .proof-company {
+            padding: 16px 32px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .proof-company:hover {
+            color: var(--text-primary);
+            border-color: var(--accent-blue);
+            background: rgba(79, 124, 255, 0.1);
+        }
+
+        /* Final CTA Section */
+        .final-cta {
+            padding: 160px 0;
+            position: relative;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .final-cta::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(79, 124, 255, 0.15) 0%, transparent 60%);
+            animation: ctaGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes ctaGlow {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-content h2 {
+            font-size: 52px;
+            margin-bottom: 24px;
+        }
+
+        .cta-content p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-form {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            max-width: 500px;
+            margin: 0 auto 24px;
+        }
+
+        .cta-input {
+            flex: 1;
+            padding: 18px 24px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            font-size: 16px;
+            color: var(--text-primary);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .cta-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .cta-input:focus {
+            border-color: var(--accent-violet);
+            box-shadow: 0 0 30px var(--glow-violet);
+        }
+
+        .cta-subtext {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* Success State */
+        .success-message {
+            display: none;
+            padding: 40px;
+            background: var(--glass-bg);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 24px;
+            text-align: center;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: successPop 0.5s ease;
+        }
+
+        @keyframes successPop {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #10B981, #34D399);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 24px;
+        }
+
+        .success-message h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+            color: #10B981;
+        }
+
+        .success-message p {
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--glass-border);
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Scroll Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero-subtitle {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-ctas {
+                justify-content: center;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .demo-content {
+                grid-template-columns: 1fr;
+            }
+
+            .profit-metrics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .diff-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline {
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .timeline::before {
+                top: 0;
+                bottom: 0;
+                left: 40px;
+                right: auto;
+                width: 2px;
+                height: auto;
+            }
+
+            .timeline-step {
+                flex-direction: row;
+                text-align: left;
+                gap: 24px;
+            }
+
+            .step-number {
+                margin-bottom: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .section-header h2 {
+                font-size: 32px;
+            }
+
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-form {
+                flex-direction: column;
+            }
+
+            .proof-stats {
+                gap: 40px;
+            }
+
+            .proof-value {
+                font-size: 48px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .floating-label {
+                display: none;
+            }
+
+            .demo-tabs {
+                overflow-x: auto;
+                justify-content: flex-start;
+                padding-bottom: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Effects -->
+    <div class="bg-grid"></div>
+    <div class="particles" id="particles"></div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Ageniq AI</div>
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="#problem">Why Ageniq</a></li>
+                        <li><a href="#demo">Features</a></li>
+                        <li><a href="#profit">Intelligence</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                    </ul>
+                </nav>
+                <a href="#cta" class="btn btn-primary btn-glow">Join Waitlist</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="hero-badge">
+                        <span></span>
+                        Private Beta Access
+                    </div>
+                    <h1>Turn Your Marketing Agency Into a Scalable Profit Machine</h1>
+                    <p class="hero-subtitle">The first AI-powered Agency Growth OS that automates campaigns, reporting, and profit intelligence — in one unified system.</p>
+                    <div class="hero-ctas">
+                        <a href="#cta" class="btn btn-primary btn-glow">🚀 Join the Founding Agency Waitlist</a>
+                        <a href="#demo" class="btn btn-secondary">See How It Works →</a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <div class="stat-value">+32%</div>
+                            <div class="stat-label">Client Retention</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">3.4h</div>
+                            <div class="stat-label">Saved Per Campaign</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">24%</div>
+                            <div class="stat-label">Margin Optimized</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-dashboard">
+                    <div class="dashboard-container">
+                        <div class="floating-label">+32% Client Retention</div>
+                        <div class="floating-label">3.4h Saved Per Campaign</div>
+                        <div class="floating-label">Margin Optimized</div>
+                        <div class="dashboard-header">
+                            <div class="dashboard-title">Ageniq AI Dashboard</div>
+                            <div class="dashboard-status">AI Active</div>
+                        </div>
+                        <div class="dashboard-grid">
+                            <div class="dashboard-card">
+                                <div class="card-label">Total Revenue</div>
+                                <div class="card-value">$847K</div>
+                                <div class="card-change">↑ 23% vs last month</div>
+                            </div>
+                            <div class="dashboard-card">
+                                <div class="card-label">Active Campaigns</div>
+                                <div class="card-value">47</div>
+                                <div class="card-change">↑ 12 new this week</div>
+                            </div>
+                            <div class="dashboard-card">
+                                <div class="card-label">Avg. Margin</div>
+                                <div class="card-value positive">34.2%</div>
+                                <div class="card-change">↑ 4.1% optimized</div>
+                            </div>
+                        </div>
+                        <div class="ai-activity">
+                            <div class="activity-header">
+                                <div class="activity-title">AI Activity Stream</div>
+                                <div class="activity-badge">Live</div>
+                            </div>
+                            <div class="activity-items">
+                                <div class="activity-item">
+                                    <div class="activity-icon">📊</div>
+                                    <div class="activity-text">
+                                        <div class="activity-name">Campaign Performance Report</div>
+                                        <div class="activity-status">Generated for Client A — 2m ago</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-icon">🎯</div>
+                                    <div class="activity-text">
+                                        <div class="activity-name">Ad Copy Optimized</div>
+                                        <div class="activity-status">3 variations created — 5m ago</div>
+                                    </div>
+                                </div>
+                                <div class="activity-item">
+                                    <div class="activity-icon">💰</div>
+                                    <div class="activity-text">
+                                        <div class="activity-name">Margin Alert</div>
+                                        <div class="activity-status">Client B budget reallocated — 8m ago</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem" id="problem">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Agencies Don't Struggle With Creativity.<br>They Struggle With Scale.</h2>
+                <p>The gap between a profitable agency and a scalable one isn't talent — it's systems.</p>
+            </div>
+            <div class="comparison">
+                <div class="comparison-side negative reveal">
+                    <div class="comparison-title negative">❌ The Old Way</div>
+                    <ul class="comparison-list">
+                        <li>Manual reporting eating 10+ hours/week</li>
+                        <li>Margin guesswork based on gut feeling</li>
+                        <li>Disconnected tools creating data silos</li>
+                        <li>Client churn due to poor visibility</li>
+                        <li>Hiring just to maintain capacity</li>
+                    </ul>
+                </div>
+                <div class="comparison-side positive reveal">
+                    <div class="comparison-title positive">✅ The Ageniq Way</div>
+                    <ul class="comparison-list">
+                        <li>Automated reports delivered to inbox</li>
+                        <li>Real-time profit tracking per client</li>
+                        <li>Unified AI workflows across all tools</li>
+                        <li>Churn prediction engine with alerts</li>
+                        <li>Scale without hiring using AI automation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Demo Section -->
+    <section class="demo" id="demo">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>One Platform. Complete Agency Intelligence.</h2>
+                <p>Everything you need to run a profitable, scalable agency — without the chaos.</p>
+            </div>
+            <div class="demo-tabs reveal">
+                <button class="demo-tab active" data-tab="campaigns">AI Campaign Builder</button>
+                <button class="demo-tab" data-tab="reports">Automated Reports</button>
+                <button class="demo-tab" data-tab="profit">Profit Intelligence</button>
+                <button class="demo-tab" data-tab="memory">Brand Memory</button>
+                <button class="demo-tab" data-tab="portal">White-Label Portal</button>
+            </div>
+            <div class="demo-content">
+                <div class="demo-visual reveal">
+                    <!-- Tab Content: Campaigns -->
+                    <div class="demo-visual-content active" id="campaigns">
+                        <div class="demo-mockup">
+                            <div class="mockup-header">
+                                <div class="mockup-dot"></div>
+                                <div class="mockup-dot"></div>
+                                <div class="mockup-dot"></div>
+                            </div>
+                            <div class="mockup-content">
+                                <div class="mockup-line medium"></div>
+                                <div class="mockup-line short"></div>
+                                <div class="mockup-line medium"></div>
+                                <div class="mockup-line short"></div>
+                                <div class="mockup-line"></div>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px;">
+                            <div class="dashboard-card">
+                                <div class="card-label">Campaigns Generated</div>
+                                <div class="card-value">127</div>
+                            </div>
+                            <div class="dashboard-card">
+                                <div class="card-label">Time Saved</div>
+                                <div class="card-value positive">340h</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tab Content: Reports -->
+                    <div class="demo-visual-content" id="reports">
+                        <div class="demo-mockup">
+                            <div class="mockup-header">
+                                <div class="mockup-dot"></div>
+                                <div class="mockup-dot"></div>
+                                <div class="mockup-dot"></div>
+                            </div>
+                            <div class="mockup-content">
+                                <div class="mockup-line medium"></div>
+                                <div class="mockup-line"></div>
+                                <div class="mockup-line short"></div>
+                                <div class="mockup-line medium"></div>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px;">
+                            <div class="dashboard-card">
+                                <div class="card-label">Reports Sent</div>
+                                <div class="card-value">892</div>
+                            </div>
+                            <div class="dashboard-card">
+                                <div class="card-label">Clients Love It</div>
+                                <div class="card-value positive">4.9★</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tab Content: Profit -->
+                    <div class="demo-visual-content" id="profit">
+                        <div class="demo-mockup">
+                            <div class="mockup-header">
+                                <div class="mockup-dot"></div>
+                                <div class="mockup-dot"></div>
+                                <div class="mockup-dot"></div>
+                            </div>
+                            <div class="mockup-content">
+                                <div class="mockup-line"></div>
+                                <div class="mockup-line medium"></div>
+                                <div class="mockup-line short"></div>
+                                <div class="mockup-line"></div>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px;">
+                            <div class="dashboard-card">
+                                <div class="card-label">Margin Improved</div>
+                                <div class="card-value positive">+24%</div>
+                            </div>
+                            <div class="dashboard-card">
+                                <div class="card-label">At-Risk Clients</div>
+                                <div class="card-value" style="color: #F59E0B;">3</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tab Content: Memory -->
+                    <div class="demo-visual-content" id="memory">
+                        <div class="demo-mockup">
+                            <div class="mockup-header">
+                                <div class="mockup-dot"></div>
+                                <div class="mockup-dot"></div>
+                                <div class="mockup-dot"></div>
+                            </div>
+                            <div class="mockup-content">
+                                <div class="mockup-line medium"></div>
+                                <div class="mockup-line"></div>
+                                <div class="mockup-line medium"></div>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px;">
+                            <div class="dashboard-card">
+                                <div class="card-label">Brand Profiles</div>
+                                <div class="card-value">48</div>
+                            </div>
+                            <div class="dashboard-card">
+                                <div class="card-label">Consistency Score</div>
+                                <div class="card-value positive">94%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tab Content: Portal -->
+                    <div class="demo-visual-content" id="portal">
+                        <div class="demo-mockup">
+                            <div class="mockup-header">
+                                <div class="mockup-dot"></div>
+                                <div class="mockup-dot"></div>
+                                <div class="mockup-dot"></div>
+                            </div>
+                            <div class="mockup-content">
+                                <div class="mockup-line short"></div>
+                                <div class="mockup-line medium"></div>
+                                <div class="mockup-line"></div>
+                                <div class="mockup-line short"></div>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px;">
+                            <div class="dashboard-card">
+                                <div class="card-label">Portals Active</div>
+                                <div class="card-value">12</div>
+                            </div>
+                            <div class="dashboard-card">
+                                <div class="card-label">Client Access</div>
+                                <div class="card-value positive">24/7</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="demo-info reveal">
+                    <h3 id="demo-title">AI Campaign Builder</h3>
+                    <p id="demo-desc">Generate full multi-channel campaigns in one click — copy, creatives, hooks, and optimization suggestions included.</p>
+                    <div class="demo-metric">
+                        <div class="metric-icon">⚡</div>
+                        <div>
+                            <div class="metric-value">6h/week</div>
+                            <div class="metric-label">Saved per client</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Profit Intelligence Section -->
+    <section class="profit" id="profit">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Finally See Which Clients Make You Money — and Which Don't.</h2>
+                <p>AI analyzes campaign costs, ad performance, and internal time allocation to optimize agency margins automatically.</p>
+            </div>
+            <div class="profit-visual reveal">
+                <div class="alert-notification">
+                    <div class="alert-icon">!</div>
+                    <div class="alert-text">
+                        <div class="alert-title">Churn Risk Alert</div>
+                        <div class="alert-desc">Client "TechStart Inc" margin below threshold</div>
+                    </div>
+                </div>
+                <div class="profit-chart" id="profitChart">
+                    <div class="chart-bar-container">
+                        <div class="chart-bar" data-height="60"></div>
+                        <div class="chart-label">Jan</div>
+                    </div>
+                    <div class="chart-bar-container">
+                        <div class="chart-bar" data-height="75"></div>
+                        <div class="chart-label">Feb</div>
+                    </div>
+                    <div class="chart-bar-container">
+                        <div class="chart-bar" data-height="65"></div>
+                        <div class="chart-label">Mar</div>
+                    </div>
+                    <div class="chart-bar-container">
+                        <div class="chart-bar" data-height="85"></div>
+                        <div class="chart-label">Apr</div>
+                    </div>
+                    <div class="chart-bar-container">
+                        <div class="chart-bar" data-height="90"></div>
+                        <div class="chart-label">May</div>
+                    </div>
+                    <div class="chart-bar-container">
+                        <div class="chart-bar" data-height="100"></div>
+                        <div class="chart-label">Jun</div>
+                    </div>
+                </div>
+                <div class="profit-metrics">
+                    <div class="profit-metric">
+                        <div class="profit-metric-value" data-target="34">0%</div>
+                        <div class="profit-metric-label">Avg. Margin Improvement</div>
+                    </div>
+                    <div class="profit-metric">
+                        <div class="profit-metric-value" data-target="47">0</div>
+                        <div class="profit-metric-label">Campaigns Optimized</div>
+                    </div>
+                    <div class="profit-metric">
+                        <div class="profit-metric-value" data-target="12">0</div>
+                        <div class="profit-metric-label">At-Risk Clients Flagged</div>
+                    </div>
+                    <div class="profit-metric">
+                        <div class="profit-metric-value" data-target="89">0%</div>
+                        <div class="profit-metric-label">Client Satisfaction</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>How It Works</h2>
+                <p>From disconnected chaos to automated profit machine — in three steps.</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-step reveal" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-title">Connect Your Data</div>
+                        <div class="step-desc">Link your ad accounts, CRM, and billing in one click. Our AI learns your agency's operations instantly.</div>
+                    </div>
+                </div>
+                <div class="timeline-step reveal" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-title">AI Automates Everything</div>
+                        <div class="step-desc">Campaigns write themselves. Reports auto-generate. Profit insights update in real-time.</div>
+                    </div>
+                </div>
+                <div class="timeline-step reveal" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-title">Scale Without Hiring</div>
+                        <div class="step-desc">Grow revenue 2-3x while maintaining your current team. AI handles the capacity crunch.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Differentiation Section -->
+    <section class="differentiation" id="differentiation">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Not Another AI Content Tool.</h2>
+                <p>There's a fundamental difference between generating content and growing your agency.</p>
+            </div>
+            <div class="diff-grid">
+                <div class="diff-card reveal">
+                    <div class="diff-icon">🎨</div>
+                    <div class="diff-title">AI Content Tools</div>
+                    <div class="diff-desc">Generate blog posts, social media, and ad copy. Helpful for creation, but doesn't move the needle on agency growth or profitability.</div>
+                </div>
+                <div class="diff-card reveal">
+                    <div class="diff-icon">⚙️</div>
+                    <div class="diff-title">Automation Tools</div>
+                    <div class="diff-desc">Connect APIs and Zapier workflows. Save time on manual tasks, but still require heavy setup and don't provide intelligence.</div>
+                </div>
+                <div class="diff-card highlight reveal">
+                    <div class="diff-icon">🚀</div>
+                    <div class="diff-title">Ageniq AI</div>
+                    <div class="diff-desc">The only platform designed to grow your agency. AI that understands profit, predicts churn, and automates the entire client delivery stack.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof Section -->
+    <section class="social-proof" id="social-proof">
+        <div class="container">
+            <div class="proof-header reveal">
+                <h2>Early Access Agencies Are Already Reporting:</h2>
+            </div>
+            <div class="proof-stats">
+                <div class="proof-stat reveal">
+                    <div class="proof-value"><span class="counter" data-target="40">0</span>%</div>
+                    <div class="proof-label">Reporting Time Reduction</div>
+                </div>
+                <div class="proof-stat reveal">
+                    <div class="proof-value"><span class="counter" data-target="25">0</span>%</div>
+                    <div class="proof-label">Faster Campaign Deployment</div>
+                </div>
+                <div class="proof-stat reveal">
+                    <div class="proof-value"><span class="counter" data-target="32">0</span>%</div>
+                    <div class="proof-label">Improved Client Retention</div>
+                </div>
+            </div>
+            <div class="proof-companies reveal">
+                <div class="proof-company">Velocity Media</div>
+                <div class="proof-company">GrowthLab Agency</div>
+                <div class="proof-company">Scale Digital</div>
+                <div class="proof-company">Primewave</div>
+                <div class="proof-company">Nexus Creative</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="final-cta" id="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="reveal">Ready to Build the Next-Generation Agency?</h2>
+                <p class="reveal">Join the founding agencies shaping the future of AI-powered growth.</p>
+                <form class="cta-form reveal" id="waitlistForm">
+                    <input type="email" class="cta-input" placeholder="Enter your work email" required>
+                    <button type="submit" class="btn btn-primary btn-glow">🔥 Reserve My Early Access Spot</button>
+                </form>
+                <p class="cta-subtext reveal">Limited founding member access. Private beta launches soon.</p>
+            </div>
+            <div class="success-message" id="successMessage">
+                <div class="success-icon">✓</div>
+                <h3>You're on the list!</h3>
+                <p>We'll be in touch soon with your exclusive access details.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-text">© 2026 Ageniq AI. All rights reserved.</div>
+                <div class="footer-links">
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                    <a href="#">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Generate particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.width = (Math.random() * 4 + 2) + 'px';
+            particle.style.height = particle.style.width;
+            particlesContainer.appendChild(particle);
+        }
+
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Demo tabs
+        const demoTabs = document.querySelectorAll('.demo-tab');
+        const demoContents = document.querySelectorAll('.demo-visual-content');
+        const demoTitle = document.getElementById('demo-title');
+        const demoDesc = document.getElementById('demo-desc');
+
+        const demoData = {
+            campaigns: {
+                title: 'AI Campaign Builder',
+                desc: 'Generate full multi-channel campaigns in one click — copy, creatives, hooks, and optimization suggestions included.'
+            },
+            reports: {
+                title: 'Automated Performance Reports',
+                desc: 'Beautiful, client-ready reports delivered automatically. Customize branding and focus on insights, not data entry.'
+            },
+            profit: {
+                title: 'Client Profit Intelligence',
+                desc: 'See exactly which clients are profitable and which are draining resources. AI recommends actions to improve margins.'
+            },
+            memory: {
+                title: 'Brand Memory Engine',
+                desc: 'Every client brand guideline, voice preference, and past campaign learnings — stored and applied automatically.'
+            },
+            portal: {
+                title: 'White-Label Client Portal',
+                desc: 'Give clients a premium portal to access reports, campaign data, and communicate — all white-labeled to your agency.'
+            }
+        };
+
+        demoTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.dataset.tab;
+
+                demoTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                demoContents.forEach(c => c.classList.remove('active'));
+                document.getElementById(tabId).classList.add('active');
+
+                demoTitle.textContent = demoData[tabId].title;
+                demoDesc.textContent = demoData[tabId].desc;
+            });
+        });
+
+        // Scroll reveal animations
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const revealOnScroll = () => {
+            revealElements.forEach(el => {
+                const elementTop = el.getBoundingClientRect().top;
+                const elementVisible = 150;
+
+                if (elementTop < window.innerHeight - elementVisible) {
+                    el.classList.add('active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll();
+
+        // Timeline scroll animation
+        const timelineSteps = document.querySelectorAll('.timeline-step');
+
+        const animateTimeline = () => {
+            timelineSteps.forEach((step, index) => {
+                const stepTop = step.getBoundingClientRect().top;
+                if (stepTop < window.innerHeight - 100) {
+                    step.classList.add('active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', animateTimeline);
+        animateTimeline();
+
+        // Counter animation
+        const counters = document.querySelectorAll('.counter');
+
+        const animateCounters = () => {
+            counters.forEach(counter => {
+                const counterTop = counter.getBoundingClientRect().top;
+                if (counterTop < window.innerHeight - 100 && !counter.classList.contains('animated')) {
+                    counter.classList.add('animated');
+                    const target = parseInt(counter.dataset.target);
+                    const duration = 2000;
+                    const step = target / (duration / 16);
+                    let current = 0;
+
+                    const updateCounter = () => {
+                        current += step;
+                        if (current < target) {
+                            counter.textContent = Math.floor(current);
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            counter.textContent = target;
+                        }
+                    };
+
+                    updateCounter();
+                }
+            });
+        };
+
+        window.addEventListener('scroll', animateCounters);
+        animateCounters();
+
+        // Profit metrics animation
+        const profitMetrics = document.querySelectorAll('.profit-metric-value');
+
+        const animateProfitMetrics = () => {
+            profitMetrics.forEach(metric => {
+                const metricTop = metric.getBoundingClientRect().top;
+                if (metricTop < window.innerHeight - 100 && !metric.classList.contains('animated')) {
+                    metric.classList.add('animated');
+                    const target = parseInt(metric.dataset.target);
+                    const isPercent = metric.textContent.includes('%');
+                    const duration = 2000;
+                    const step = target / (duration / 16);
+                    let current = 0;
+
+                    const updateMetric = () => {
+                        current += step;
+                        if (current < target) {
+                            metric.textContent = Math.floor(current) + (isPercent ? '%' : '');
+                            requestAnimationFrame(updateMetric);
+                        } else {
+                            metric.textContent = target + (isPercent ? '%' : '');
+                        }
+                    };
+
+                    updateMetric();
+                }
+            });
+        };
+
+        window.addEventListener('scroll', animateProfitMetrics);
+        animateProfitMetrics();
+
+        // Chart bars animation
+        const chartBars = document.querySelectorAll('.chart-bar');
+
+        const animateChart = () => {
+            chartBars.forEach((bar, index) => {
+                const barContainer = bar.closest('.chart-bar-container');
+                const barTop = barContainer.getBoundingClientRect().top;
+                if (barTop < window.innerHeight - 100) {
+                    setTimeout(() => {
+                        const height = bar.dataset.height;
+                        bar.style.height = height + '%';
+                    }, index * 100);
+                }
+            });
+        };
+
+        window.addEventListener('scroll', animateChart);
+        animateChart();
+
+        // Form submission
+        const waitlistForm = document.getElementById('waitlistForm');
+        const successMessage = document.getElementById('successMessage');
+
+        waitlistForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            waitlistForm.style.display = 'none';
+            document.querySelector('.cta-subtext').style.display = 'none';
+            successMessage.classList.add('show');
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            revealOnScroll();
+            animateTimeline();
+            animateCounters();
+            animateProfitMetrics();
+            animateChart();
+        });
+    </script>
+
+<script>
+/**
+ * Iframe 元素高亮注入脚本
+ * 需要在目标网站中引入此脚本来支持跨域 iframe 高亮功能
+ *
+ * 使用方法：
+ * 1. 将此脚本添加到目标网站的 HTML 中
+ * 2. 或通过浏览器扩展、用户脚本等方式注入
+ */
+
+(function () {
+  "use strict";
+
+  // 检查是否在 iframe 中
+  if (window.self === window.top) {
+    return; // 不在 iframe 中，不执行
+  }
+
+  // 检查是否已经初始化过
+  if (window.__iframeHighlightInitialized) {
+    return;
+  }
+  window.__iframeHighlightInitialized = true;
+  console.log("Iframe 高亮脚本已加载");
+
+  // 创建高亮覆盖层
+  var overlay = document.createElement("div");
+  overlay.id = "iframe-highlight-overlay";
+  overlay.style.cssText = "\n    position: fixed;\n    top: 0;\n    left: 0;\n    width: 100vw;\n    height: 100vh;\n    pointer-events: none;\n    z-index: 999999;\n    overflow: hidden;\n  ";
+
+  // 创建悬停高亮框（虚线边框）
+  var highlightBox = document.createElement("div");
+  highlightBox.id = "iframe-highlight-box";
+  highlightBox.style.cssText = "\n    position: absolute;\n    border: 2px dashed #007AFF;\n    background: rgba(0, 122, 255, 0.08);\n    pointer-events: none;\n    display: none;\n    transition: all 0.1s ease;\n    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.8);\n    border-radius: 2px;\n  ";
+
+  // 创建选中节点的常驻高亮框（实线边框）
+  var selectedBox = document.createElement("div");
+  selectedBox.id = "iframe-selected-box";
+  selectedBox.style.cssText = "\n    position: absolute;\n    border: 2px solid #007AFF;\n    pointer-events: none;\n    display: none;\n    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.9), 0 0 8px rgba(255, 107, 53, 0.4);\n    border-radius: 2px;\n    z-index: 1000000;\n  ";
+
+  // 创建悬停标签显示
+  var tagLabel = document.createElement("div");
+  tagLabel.id = "iframe-tag-label";
+  tagLabel.style.cssText = "\n    position: absolute;\n    background: #007AFF;\n    color: white;\n    padding: 2px 6px;\n    font-size: 11px;\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;\n    border-radius: 2px;\n    pointer-events: none;\n    display: none;\n    white-space: nowrap;\n    z-index: 1000001;\n    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);\n    font-weight: 500;\n  ";
+
+  // 创建选中节点标签
+  var selectedLabel = document.createElement("div");
+  selectedLabel.id = "iframe-selected-label";
+  selectedLabel.style.cssText = "\n    position: absolute;\n    background: #007AFF;\n    color: white;\n    padding: 3px 8px;\n    font-size: 11px;\n    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;\n    border-radius: 3px;\n    pointer-events: none;\n    display: none;\n    white-space: nowrap;\n    z-index: 1000002;\n    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);\n    font-weight: 600;\n  ";
+  overlay.appendChild(highlightBox);
+  overlay.appendChild(selectedBox);
+  overlay.appendChild(tagLabel);
+  overlay.appendChild(selectedLabel);
+  document.body.appendChild(overlay);
+
+  // 存储当前选中的元素
+  var selectedElement = null;
+  var highlightEnabled = false;
+
+  // 更新选中元素的高亮显示
+  function updateSelectedHighlight(element) {
+    console.log("updateSelectedHighlight called with:", element);
+    if (!element) {
+      selectedBox.style.display = "none";
+      selectedLabel.style.display = "none";
+      selectedElement = null;
+      console.log("Cleared selected highlight");
+      return;
+    }
+    selectedElement = element;
+    var rect = element.getBoundingClientRect();
+    console.log("Selected element rect:", rect);
+
+    // 更新选中高亮框位置
+    selectedBox.style.display = "block";
+    selectedBox.style.left = "".concat(rect.left - 2, "px");
+    selectedBox.style.top = "".concat(rect.top - 2, "px");
+    selectedBox.style.width = "".concat(rect.width + 4, "px");
+    selectedBox.style.height = "".concat(rect.height + 4, "px");
+
+    // 更新选中标签位置和内容
+    selectedLabel.style.display = "block";
+    selectedLabel.textContent = "\u2713 <".concat(element.tagName.toLowerCase(), ">");
+
+    // 计算标签位置，确保不超出视窗
+    var labelTop = rect.top - 28;
+    var labelLeft = rect.left;
+
+    // 如果标签会超出顶部，显示在元素下方
+    if (labelTop < 5) {
+      labelTop = rect.bottom + 5;
+    }
+
+    // 如果标签会超出右侧，向左调整
+    var labelWidth = selectedLabel.offsetWidth || 100; // 预估宽度
+    if (labelLeft + labelWidth > window.innerWidth - 10) {
+      labelLeft = window.innerWidth - labelWidth - 10;
+    }
+    selectedLabel.style.left = "".concat(Math.max(5, labelLeft), "px");
+    selectedLabel.style.top = "".concat(labelTop, "px");
+    console.log("Selected highlight positioned at:", {
+      left: selectedBox.style.left,
+      top: selectedBox.style.top,
+      width: selectedBox.style.width,
+      height: selectedBox.style.height
+    });
+  }
+  function getElementSelector(element) {
+    if (!(element instanceof Element)) throw new Error('Argument must be a DOM element');
+    var segments = [];
+    var current = element;
+    while (current !== document.documentElement) {
+      var selector = '';
+      // 优先检查唯一ID
+      if (current.id && document.querySelectorAll("#".concat(current.id)).length === 1) {
+        segments.unshift("#".concat(current.id));
+        break; // ID唯一，无需继续向上
+      }
+
+      // 生成类名选择器（取第一个有效类名）
+      var classes = Array.from(current.classList).filter(function (c) {
+        return !c.startsWith('js-');
+      });
+      var className = classes.length > 0 ? ".".concat(classes[0]) : '';
+
+      // 生成位置索引（nth-child）
+      var tag = current.tagName.toLowerCase();
+      if (!className) {
+        var siblings = Array.from(current.parentNode.children);
+        var index = siblings.findIndex(function (el) {
+          return el === current;
+        }) + 1;
+        selector = "".concat(tag, ":nth-child(").concat(index, ")");
+      } else {
+        selector = className;
+      }
+      segments.unshift(selector);
+      current = current.parentElement;
+    }
+
+    // 处理根元素
+    if (current === document.documentElement) {
+      segments.unshift('html');
+    }
+    return segments.join(' > ');
+  }
+
+  // 获取元素文本内容
+  function getElementText(element) {
+    var _element$textContent;
+    if (element.tagName === "INPUT") {
+      return element.value || element.placeholder || "";
+    }
+    if (element.tagName === "TEXTAREA") {
+      return element.value || element.placeholder || "";
+    }
+    var text = ((_element$textContent = element.textContent) === null || _element$textContent === void 0 ? void 0 : _element$textContent.trim()) || "";
+    return text.length > 50 ? text.substring(0, 50) + "..." : text;
+  }
+
+  // 获取元素属性信息
+  function getElementAttributes(element) {
+    var attrs = {};
+    for (var i = 0; i < element.attributes.length; i++) {
+      var attr = element.attributes[i];
+      attrs[attr.name] = attr.value;
+    }
+    return attrs;
+  }
+
+  // 鼠标悬停事件处理
+  function handleMouseOver(e) {
+    if (!highlightEnabled) return;
+    var target = e.target;
+    if (!target || target === overlay || target === highlightBox || target === tagLabel || target === selectedBox || target === selectedLabel) {
+      return;
+    }
+
+    // 避免高亮 html 和 body 元素
+    if (target === document.documentElement || target === document.body) {
+      return;
+    }
+
+    // 如果是已选中的元素，不显示悬停高亮
+    if (target === selectedElement) {
+      highlightBox.style.display = "none";
+      tagLabel.style.display = "none";
+      return;
+    }
+    var rect = target.getBoundingClientRect();
+    var selector = getElementSelector(target);
+    var text = getElementText(target);
+    var attributes = getElementAttributes(target);
+
+    // 更新悬停高亮框位置
+    highlightBox.style.display = "block";
+    highlightBox.style.left = "".concat(rect.left - 2, "px");
+    highlightBox.style.top = "".concat(rect.top - 2, "px");
+    highlightBox.style.width = "".concat(rect.width + 4, "px");
+    highlightBox.style.height = "".concat(rect.height + 4, "px");
+
+    // 更新标签位置和内容
+    tagLabel.style.display = "block";
+    tagLabel.textContent = "<".concat(target.tagName.toLowerCase(), ">");
+
+    // 计算标签位置，确保不超出视窗
+    var labelTop = rect.top - 22;
+    var labelLeft = rect.left;
+
+    // 如果标签会超出顶部，显示在元素下方
+    if (labelTop < 0) {
+      labelTop = rect.bottom + 5;
+    }
+
+    // 如果标签会超出右侧，向左调整
+    if (labelLeft + tagLabel.offsetWidth > window.innerWidth) {
+      labelLeft = window.innerWidth - tagLabel.offsetWidth - 5;
+    }
+    tagLabel.style.left = "".concat(Math.max(0, labelLeft), "px");
+    tagLabel.style.top = "".concat(labelTop, "px");
+
+    // 发送消息到父窗口
+    var elementInfo = {
+      tagName: target.tagName.toLowerCase(),
+      rect: {
+        left: rect.left,
+        top: rect.top,
+        right: rect.right,
+        bottom: rect.bottom,
+        width: rect.width,
+        height: rect.height,
+        x: rect.x,
+        y: rect.y
+      },
+      selector: selector,
+      text: text,
+      attributes: attributes,
+      url: window.location.href,
+      path: window.location.pathname,
+      timestamp: Date.now()
+    };
+    try {
+      window.parent.postMessage({
+        type: "iframe-element-hover",
+        data: elementInfo,
+        source: "iframe-highlight-injector"
+      }, "*");
+    } catch (error) {
+      console.warn("无法发送消息到父窗口:", error);
+    }
+  }
+
+  // 鼠标离开事件处理
+  function handleMouseOut(e) {
+    if (!highlightEnabled) return;
+    var relatedTarget = e.relatedTarget;
+
+    // 如果鼠标移动到高亮相关元素上，不隐藏高亮
+    if (relatedTarget && (relatedTarget === highlightBox || relatedTarget === tagLabel || relatedTarget === overlay || relatedTarget === selectedBox || relatedTarget === selectedLabel)) {
+      return;
+    }
+    highlightBox.style.display = "none";
+    tagLabel.style.display = "none";
+    try {
+      window.parent.postMessage({
+        type: "iframe-element-hover",
+        data: null,
+        source: "iframe-highlight-injector"
+      }, "*");
+    } catch (error) {
+      console.warn("无法发送消息到父窗口:", error);
+    }
+  }
+
+  // 点击事件处理
+  function handleClick(e) {
+    var target = e.target;
+    if (!target || target === overlay || target === highlightBox || target === tagLabel || target === selectedBox || target === selectedLabel) {
+      return;
+    }
+
+    // 避免处理 html 和 body 元素
+    if (target === document.documentElement || target === document.body) {
+      return;
+    }
+
+    // 检查是否是交互元素，这些元素需要保留默认行为
+    var isInteractiveElement = ['input', 'textarea', 'select', 'button', 'a'].includes(target.tagName.toLowerCase());
+
+    // 如果高亮功能启用，对于非交互元素阻止默认行为和事件传播
+    if (highlightEnabled) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    var rect = target.getBoundingClientRect();
+    var selector = getElementSelector(target);
+    var text = getElementText(target);
+    var attributes = getElementAttributes(target);
+    console.log("Element clicked:", {
+      tagName: target.tagName,
+      selector: selector,
+      rect: rect
+    });
+
+    // 立即更新选中高亮
+    updateSelectedHighlight(target);
+
+    // 隐藏悬停高亮，因为现在是选中状态
+    highlightBox.style.display = "none";
+    tagLabel.style.display = "none";
+    var elementInfo = {
+      tagName: target.tagName.toLowerCase(),
+      rect: {
+        left: rect.left,
+        top: rect.top,
+        right: rect.right,
+        bottom: rect.bottom,
+        width: rect.width,
+        height: rect.height,
+        x: rect.x,
+        y: rect.y
+      },
+      selector: selector,
+      text: text,
+      attributes: attributes,
+      url: window.location.href,
+      path: window.location.pathname,
+      timestamp: Date.now()
+    };
+    try {
+      window.parent.postMessage({
+        type: "iframe-element-click",
+        data: elementInfo,
+        source: "iframe-highlight-injector"
+      }, "*");
+    } catch (error) {
+      console.warn("无法发送消息到父窗口:", error);
+    }
+  }
+
+  // 监听来自父窗口的消息
+  function handleParentMessage(event) {
+    console.log("Received message from parent:", event.data);
+    if (event.data.type === "iframe-highlight-toggle") {
+      var enabled = event.data.enabled;
+      console.log("Highlight toggle:", enabled);
+      if (enabled) {
+        enableHighlight();
+      } else {
+        disableHighlight();
+      }
+    } else if (event.data.type === "enable-iframe-highlight") {
+      console.log("Enable iframe highlight");
+      enableHighlight();
+    } else if (event.data.type === "disable-iframe-highlight") {
+      console.log("Disable iframe highlight");
+      disableHighlight();
+    } else if (event.data.type === "toggle-iframe-highlight") {
+      var _enabled = event.data.enabled !== undefined ? event.data.enabled : !highlightEnabled;
+      console.log("Toggle iframe highlight to:", _enabled);
+      if (_enabled) {
+        enableHighlight();
+      } else {
+        disableHighlight();
+      }
+    } else if (event.data.type === "update-selected-element") {
+      var selector = event.data.selector;
+      console.log("Update selected element with selector:", selector);
+      if (selector) {
+        try {
+          var element = document.querySelector(selector);
+          console.log("Found element by selector:", element);
+          updateSelectedHighlight(element);
+        } catch (error) {
+          console.warn("Failed to select element:", error);
+          updateSelectedHighlight(null);
+        }
+      } else {
+        updateSelectedHighlight(null);
+      }
+    } else if (event.data.type === "clear-selected-element") {
+      console.log("Clear selected element");
+      updateSelectedHighlight(null);
+    }
+  }
+
+  // 启用高亮功能
+  function enableHighlight() {
+    console.log("Enabling highlight");
+    document.addEventListener("mouseover", handleMouseOver, true);
+    document.addEventListener("mouseout", handleMouseOut, true);
+    document.addEventListener("click", handleClick, true);
+    highlightEnabled = true;
+    overlay.style.display = "block";
+  }
+
+  // 禁用高亮功能
+  function disableHighlight() {
+    console.log("Disabling highlight");
+    highlightEnabled = false;
+    // 保持事件监听器，但通过 highlightEnabled 变量控制行为
+    // 这样可以保留选中状态的显示
+    highlightBox.style.display = "none";
+    tagLabel.style.display = "none";
+    // 不隐藏 selectedBox 和 selectedLabel，保留选中状态
+  }
+
+  // 完全禁用高亮功能（移除所有监听器）
+  function fullyDisableHighlight() {
+    console.log("Fully disabling highlight");
+    highlightEnabled = false;
+    document.removeEventListener("mouseover", handleMouseOver, true);
+    document.removeEventListener("mouseout", handleMouseOut, true);
+    document.removeEventListener("click", handleClick, true);
+    overlay.style.display = "none";
+    highlightBox.style.display = "none";
+    tagLabel.style.display = "none";
+    selectedBox.style.display = "none";
+    selectedLabel.style.display = "none";
+  }
+
+  // 添加事件监听
+  enableHighlight();
+  window.addEventListener("message", handleParentMessage);
+
+  // 暴露全局函数供外部调用
+  window.__iframeHighlightControl = {
+    enable: enableHighlight,
+    disable: disableHighlight,
+    fullyDisable: fullyDisableHighlight,
+    isEnabled: function isEnabled() {
+      return highlightEnabled;
+    },
+    getSelectedElement: function getSelectedElement() {
+      return selectedElement;
+    },
+    updateSelected: updateSelectedHighlight,
+    // 通过消息发送开关控制
+    sendToggleMessage: function sendToggleMessage(enabled) {
+      window.parent.postMessage({
+        type: 'iframe-highlight-status',
+        enabled: enabled || highlightEnabled,
+        source: 'iframe-highlight-injector'
+      }, '*');
+    }
+  };
+
+  // 通知父窗口脚本已加载
+  try {
+    window.parent.postMessage({
+      type: "iframe-highlight-ready",
+      data: {
+        url: window.location.href,
+        userAgent: navigator.userAgent,
+        timestamp: Date.now()
+      },
+      source: "iframe-highlight-injector"
+    }, "*");
+  } catch (error) {
+    console.warn("无法发送就绪消息到父窗口:", error);
+  }
+
+  // 清理函数
+  window.__iframeHighlightCleanup = function () {
+    fullyDisableHighlight();
+    window.removeEventListener("message", handleParentMessage);
+    if (overlay.parentElement) {
+      overlay.parentElement.removeChild(overlay);
+    }
+    delete window.__iframeHighlightInitialized;
+    delete window.__iframeHighlightCleanup;
+  };
+})();
+
+</script>
+</body>
+</html>
